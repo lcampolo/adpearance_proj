@@ -2,17 +2,19 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Foundation\Http\Middleware\TrimStrings as Middleware;
+use Closure;
 
-class TrimStrings extends Middleware
+class TrimStrings
 {
     /**
-     * The names of the attributes that should not be trimmed.
+     * Handle an incoming request.
      *
-     * @var array
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
      */
-    protected $except = [
-        'password',
-        'password_confirmation',
-    ];
+    public function handle($request, Closure $next)
+    {
+        return $next($request);
+    }
 }
