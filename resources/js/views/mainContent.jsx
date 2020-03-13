@@ -10,6 +10,7 @@ export default class MainContent extends React.Component {
             email: '',
             content: '',
             comments: [],
+            success: false
         }
         this.clickedSubmitContent = this.clickedSubmitContent.bind(this)
         this.getLastFiveComments = this.getLastFiveComments.bind(this)
@@ -38,7 +39,8 @@ export default class MainContent extends React.Component {
 
     clickedSubmitContent() {
         this.setState({
-            error: ''
+            error: '',
+            success: false
         })
         let params = {
             name: this.state.name,
@@ -57,7 +59,8 @@ export default class MainContent extends React.Component {
                     name: '',
                     email: '',
                     content: '',
-                    comments: response
+                    comments: response,
+                    success: true
                 })
             },
             error: (xhr, status, message) => {
@@ -71,8 +74,9 @@ export default class MainContent extends React.Component {
     render() {
         return (
             <div className="uk-containter">
-                <h1 class="uk-heading-line uk-text-center"><span>Make a Comment!</span></h1>
-                <div className="uk-panel uk-panel-box uk-width-1-2 uk-text-center">
+                <h1 className="uk-heading-line uk-text-center"><span>Make a Comment!</span></h1>
+                <div className="uk-section uk-text-center uk-width-1-2">
+                    { this.state.success ? <div className="uk-alert uk-alert-success">Saved your comment. Hoorah!</div> : null}
                     { this.state.comments.length === 0 ? 
                         <div>There are no comments yet. Be the first to add one!</div>
                     : this.state.comments.map(comment => {
@@ -84,27 +88,31 @@ export default class MainContent extends React.Component {
                         )})
                     }
                 </div>
-                <div className="uk-container-center uk-width-1-2">
-                    <div className="uk-form-row">
-                        <label>
-                            Name
-                            <input className="uk-textarea" type="text" value={this.state.name} onChange={(e) => this.setState({name: e.target.value})}></input>
-                        </label>
+                <div className="uk-section uk-width-1-2">
+                    <div className="uk-align-center">
+                        <div className="uk-form-row uk-text-center">
+                            <label>
+                                Name
+                                <input className="uk-textarea" type="text" value={this.state.name} onChange={(e) => this.setState({name: e.target.value})}></input>
+                            </label>
+                        </div>
+                        <div className="uk-form-row uk-text-center">
+                            <label>
+                                Email
+                                <input type="text" className="uk-textarea" value={this.state.email} onChange={(e) => this.setState({email: e.target.value})}></input>
+                            </label>
+                        </div>
+                        <div className="uk-form-row uk-text-center">
+                            <label>
+                                Comment
+                                <textarea type="text" className="uk-textarea" value={this.state.content} onChange={(e) => this.setState({content: e.target.value})}></textarea>
+                            </label>
+                        </div>
+                        <div className="uk-form-row uk-text-center">
+                            <button className="uk-button uk-button-primary " disabled={!this.state.name || !this.state.email || !this.state.content} onClick={this.clickedSubmitContent}>Submit</button>
+                        </div>
+                        { this.state.error ? <div className="uk-alert uk-alert-danger">{this.state.error}</div> : null}
                     </div>
-                    <div className="uk-form-row">
-                        <label>
-                            Email
-                            <input type="text" className="uk-textarea" value={this.state.email} onChange={(e) => this.setState({email: e.target.value})}></input>
-                        </label>
-                    </div>
-                    <div className="uk-form-row">
-                        <label>
-                            Comment
-                            <textarea type="text" className="uk-textarea" value={this.state.content} onChange={(e) => this.setState({content: e.target.value})}></textarea>
-                        </label>
-                    </div>
-                    <button className="uk-button uk-button-primary" disabled={!this.state.name || !this.state.email || !this.state.content} onClick={this.clickedSubmitContent}>Submit</button>
-                    { this.state.error ? <div className="uk-alert uk-alert-danger">{this.state.error}</div> : null}
                 </div>
             </div>
         )

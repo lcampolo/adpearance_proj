@@ -83347,7 +83347,8 @@ var MainContent = /*#__PURE__*/function (_React$Component) {
       name: '',
       email: '',
       content: '',
-      comments: []
+      comments: [],
+      success: false
     };
     _this.clickedSubmitContent = _this.clickedSubmitContent.bind(_assertThisInitialized(_this));
     _this.getLastFiveComments = _this.getLastFiveComments.bind(_assertThisInitialized(_this));
@@ -83385,7 +83386,8 @@ var MainContent = /*#__PURE__*/function (_React$Component) {
     key: "clickedSubmitContent",
     value: function clickedSubmitContent() {
       this.setState({
-        error: ''
+        error: '',
+        success: false
       });
       var params = {
         name: this.state.name,
@@ -83402,7 +83404,8 @@ var MainContent = /*#__PURE__*/function (_React$Component) {
             name: '',
             email: '',
             content: '',
-            comments: response
+            comments: response,
+            success: true
           });
         },
         error: function error(xhr, status, message) {
@@ -83420,10 +83423,12 @@ var MainContent = /*#__PURE__*/function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "uk-containter"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-        "class": "uk-heading-line uk-text-center"
+        className: "uk-heading-line uk-text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Make a Comment!")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "uk-panel uk-panel-box uk-width-1-2 uk-text-center"
-      }, this.state.comments.length === 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "There are no comments yet. Be the first to add one!") : this.state.comments.map(function (comment) {
+        className: "uk-section uk-text-center uk-width-1-2"
+      }, this.state.success ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "uk-alert uk-alert-success"
+      }, "Saved your comment. Hoorah!") : null, this.state.comments.length === 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "There are no comments yet. Be the first to add one!") : this.state.comments.map(function (comment) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "uk-card uk-card-default uk-container-center",
           key: comment.id
@@ -83431,9 +83436,11 @@ var MainContent = /*#__PURE__*/function (_React$Component) {
           className: "uk-card-title"
         }, comment.content));
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "uk-container-center uk-width-1-2"
+        className: "uk-section uk-width-1-2"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "uk-form-row"
+        className: "uk-align-center"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "uk-form-row uk-text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Name", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "uk-textarea",
         type: "text",
@@ -83444,7 +83451,7 @@ var MainContent = /*#__PURE__*/function (_React$Component) {
           });
         }
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "uk-form-row"
+        className: "uk-form-row uk-text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Email", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "uk-textarea",
@@ -83455,7 +83462,7 @@ var MainContent = /*#__PURE__*/function (_React$Component) {
           });
         }
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "uk-form-row"
+        className: "uk-form-row uk-text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Comment", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         type: "text",
         className: "uk-textarea",
@@ -83465,13 +83472,15 @@ var MainContent = /*#__PURE__*/function (_React$Component) {
             content: e.target.value
           });
         }
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "uk-button uk-button-primary",
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "uk-form-row uk-text-center"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "uk-button uk-button-primary ",
         disabled: !this.state.name || !this.state.email || !this.state.content,
         onClick: this.clickedSubmitContent
-      }, "Submit"), this.state.error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Submit")), this.state.error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "uk-alert uk-alert-danger"
-      }, this.state.error) : null));
+      }, this.state.error) : null)));
     }
   }]);
 
