@@ -55,13 +55,23 @@ export default class MainContent extends React.Component {
             url: '/api/saveComment',
             data: params,
             success: response => {
-                self.setState({
-                    name: '',
-                    email: '',
-                    content: '',
-                    comments: response,
-                    success: true
-                })
+                if (response.error) {
+                    self.setState({
+                        error: response.errorText,
+                        name: '',
+                        email: '',
+                        content: '',
+                    })
+                }
+                else {
+                    self.setState({
+                        name: '',
+                        email: '',
+                        content: '',
+                        comments: response,
+                        success: true
+                    })    
+                }
             },
             error: (xhr, status, message) => {
                 self.setState({

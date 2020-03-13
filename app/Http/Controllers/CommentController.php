@@ -35,7 +35,7 @@ class CommentController extends Controller
         );
 
         if (!$id) {
-            return response()->json('Failed to save comment');
+            return response()->json(['error' => true, 'errorText' => 'Failed to save comment']);
         }
 
         $lastFiveComments = DB::select('select * from comments order by created_at desc limit 5', []);
