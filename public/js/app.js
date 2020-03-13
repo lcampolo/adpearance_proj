@@ -83400,17 +83400,29 @@ var MainContent = /*#__PURE__*/function (_React$Component) {
         url: '/api/saveComment',
         data: params,
         success: function success(response) {
-          self.setState({
-            name: '',
-            email: '',
-            content: '',
-            comments: response,
-            success: true
-          });
+          if (response.error) {
+            self.setState({
+              error: response.errorText,
+              name: '',
+              email: '',
+              content: ''
+            });
+          } else {
+            self.setState({
+              name: '',
+              email: '',
+              content: '',
+              comments: response,
+              success: true
+            });
+          }
         },
         error: function error(xhr, status, message) {
           self.setState({
-            error: message
+            error: message,
+            name: '',
+            email: '',
+            content: ''
           });
         }
       });
@@ -83421,14 +83433,12 @@ var MainContent = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "uk-containter"
+        className: "uk-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "uk-heading-line uk-text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Make a Comment!")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "uk-section uk-text-center uk-width-1-2"
-      }, this.state.success ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "uk-alert uk-alert-success"
-      }, "Saved your comment. Hoorah!") : null, this.state.comments.length === 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "There are no comments yet. Be the first to add one!") : this.state.comments.map(function (comment) {
+        className: "uk-section uk-text-center uk-width-1-1"
+      }, this.state.comments.length === 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "There are no comments yet. Be the first to add one!") : this.state.comments.map(function (comment) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "uk-card uk-card-default uk-container-center",
           key: comment.id
@@ -83436,10 +83446,16 @@ var MainContent = /*#__PURE__*/function (_React$Component) {
           className: "uk-card-title"
         }, comment.content));
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "uk-section uk-width-1-2"
+        className: "uk-section uk-width-1-1"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "uk-align-center"
+        className: "uk-text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "uk-form-row"
+      }, this.state.error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "uk-alert uk-alert-danger uk-align-center uk-width-1-2"
+      }, this.state.error) : null, this.state.success ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "uk-alert uk-alert-success uk-align-center uk-width-1-2"
+      }, "Saved your comment. Hoorah!") : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "uk-form-row uk-text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Name", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "uk-textarea",
@@ -83478,9 +83494,7 @@ var MainContent = /*#__PURE__*/function (_React$Component) {
         className: "uk-button uk-button-primary ",
         disabled: !this.state.name || !this.state.email || !this.state.content,
         onClick: this.clickedSubmitContent
-      }, "Submit")), this.state.error ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "uk-alert uk-alert-danger"
-      }, this.state.error) : null)));
+      }, "Submit")))));
     }
   }]);
 

@@ -75,7 +75,10 @@ export default class MainContent extends React.Component {
             },
             error: (xhr, status, message) => {
                 self.setState({
-                    error: message
+                    error: message,
+                    name: '',
+                    email: '',
+                    content: '',
                 })
             }
         })
@@ -83,10 +86,9 @@ export default class MainContent extends React.Component {
 
     render() {
         return (
-            <div className="uk-containter">
+            <div className="uk-container">
                 <h1 className="uk-heading-line uk-text-center"><span>Make a Comment!</span></h1>
-                <div className="uk-section uk-text-center uk-width-1-2">
-                    { this.state.success ? <div className="uk-alert uk-alert-success">Saved your comment. Hoorah!</div> : null}
+                <div className="uk-section uk-text-center uk-width-1-1">
                     { this.state.comments.length === 0 ? 
                         <div>There are no comments yet. Be the first to add one!</div>
                     : this.state.comments.map(comment => {
@@ -98,8 +100,12 @@ export default class MainContent extends React.Component {
                         )})
                     }
                 </div>
-                <div className="uk-section uk-width-1-2">
-                    <div className="uk-align-center">
+                <div className="uk-section uk-width-1-1">
+                    <div className="uk-text-center">
+                        <div className="uk-form-row">
+                            { this.state.error ? <div className="uk-alert uk-alert-danger uk-align-center uk-width-1-2">{this.state.error}</div> : null}
+                            { this.state.success ? <div className="uk-alert uk-alert-success uk-align-center uk-width-1-2">Saved your comment. Hoorah!</div> : null}
+                        </div>
                         <div className="uk-form-row uk-text-center">
                             <label>
                                 Name
@@ -121,7 +127,6 @@ export default class MainContent extends React.Component {
                         <div className="uk-form-row uk-text-center">
                             <button className="uk-button uk-button-primary " disabled={!this.state.name || !this.state.email || !this.state.content} onClick={this.clickedSubmitContent}>Submit</button>
                         </div>
-                        { this.state.error ? <div className="uk-alert uk-alert-danger">{this.state.error}</div> : null}
                     </div>
                 </div>
             </div>
